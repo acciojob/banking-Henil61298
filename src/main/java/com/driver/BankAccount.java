@@ -17,10 +17,13 @@ public class BankAccount {
         //Generate account number having given number of 'digits' such that the sum of digits is equal to 'sum'
         //If it is not possible, throw "Account Number can not be generated" exception
         int ans = 0;
+        int num = 0;
         for (int i=0;i<digits;i++){
             for (int j=9;j>=0;j--){
                 if (ans + j <= sum){
                     ans += j;
+                    num *= 10;
+                    num += j;
                     break;
                 }
             }
@@ -30,7 +33,7 @@ public class BankAccount {
             throw new Exception("Account Number can not be generated");
         }
 
-        return String.valueOf(ans);
+        return String.valueOf(num);
     }
 
     public void deposit(double amount) {
