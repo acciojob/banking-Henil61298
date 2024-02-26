@@ -1,6 +1,7 @@
 package com.driver;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
@@ -19,28 +20,37 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-        char[] chArr = tradeLicenseId.toCharArray();
-        boolean flag;
-        for (int i=0;i<chArr.length-1;i++){
-            if (chArr[i] == chArr[i+1]){
-                flag = false;
-                for (int j=i+1;j<chArr.length;j++){
-                    if (chArr[j] != chArr[i]){
-                        char temp = chArr[i+1];
-                        chArr[i+1] = chArr[j];
-                        chArr[j] = temp;
-                        flag = true;
-                        break;
-                    }
-                }
+        HashMap<Character, Integer> hm = new HashMap<>();
 
-                if (!flag){
-                    throw new Exception("Valid License can not be generated");
-                }
+        for (char ch : tradeLicenseId.toCharArray()){
+            hm.put(ch, hm.getOrDefault(ch, 0) + 1);
+            if (hm.get(ch) > tradeLicenseId.length()/2){
+                throw new Exception("Valid License can not be generated");
             }
         }
 
-        this.tradeLicenseId = Arrays.toString(chArr);
+//        char[] chArr = tradeLicenseId.toCharArray();
+//        boolean flag;
+//        for (int i=0;i<chArr.length-1;i++){
+//            if (chArr[i] == chArr[i+1]){
+//                flag = false;
+//                for (int j=i+1;j<chArr.length;j++){
+//                    if (chArr[j] != chArr[i]){
+//                        char temp = chArr[i+1];
+//                        chArr[i+1] = chArr[j];
+//                        chArr[j] = temp;
+//                        flag = true;
+//                        break;
+//                    }
+//                }
+//
+//                if (!flag){
+//                    throw new Exception("Valid License can not be generated");
+//                }
+//            }
+//        }
+//
+//        this.tradeLicenseId = Arrays.toString(chArr);
     }
 
     public String getTradeLicenseId() {
